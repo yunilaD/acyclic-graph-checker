@@ -2,14 +2,24 @@
 // Student ID: 20231664
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            // Type the file path (ex: benchmarks/cyclic/c_40_0.txt)
-            String fileName = "benchmarks/acyclic/a_40_0.txt";
+        Scanner sc= new Scanner(System.in);
+        Graph graph = null;
 
-            Graph graph = GraphParser.parseFile(fileName);
+        while (true) {
+            System.out.println("Enter the file path (ex: benchmarks/cyclic/c_40_0.txt): ");
+            String fileName = sc.nextLine();
+
+            try {
+                graph = GraphParser.parseFile(fileName);
+                break; // Exit loop if parsing is successful
+            } catch (IOException e) {
+                System.out.println("Invalid file path. Please try again.");
+            }
+        }
 
             System.out.println("Checking if graph is acyclic...\n");
 
@@ -25,8 +35,6 @@ public class Main {
                 detector.printCycle(graph);
             }
 
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-        }
+        sc.close();
     }
 }
